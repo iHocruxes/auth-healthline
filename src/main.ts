@@ -18,7 +18,7 @@ async function bootstrap() {
     // .addBearerAuth()
     .build()
   const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('', app, document, {
+  SwaggerModule.setup(process.env.SERVER_NAME, app, document, {
     customfavIcon: 'https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_swagger_icon_130134.png',
     customJs: [
       'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.min.js',
@@ -40,7 +40,7 @@ async function bootstrap() {
     credentials: true
   })
 
-  app.setGlobalPrefix('common')
+  app.setGlobalPrefix(process.env.SERVER_NAME)
 
   await app.listen(3000);
 }
