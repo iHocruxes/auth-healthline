@@ -70,13 +70,4 @@ export class UserService extends BaseService<User>{
             throw new NotFoundException()
         }
     }
-
-    // async findUserInRange(start: number, end: number) {
-    //     return await this.userRepository.find({
-    //         select: ["phone", "full_name", "role", "email_notification"],
-    //         order: { updated_at: 'DESC' },
-    //         skip: start - 1,
-    //         take: end - start + 1
-    //     })
-    // }
 }
