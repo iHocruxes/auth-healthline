@@ -2,20 +2,24 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 var cookieParser = require('cookie-parser')
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.setGlobalPrefix('common')
   app.use(cookieParser())
+
   //Swagger
   const config = new DocumentBuilder()
-    .setTitle('auth*')
+    .setTitle('COMMON')
     .setDescription('HealthLine API description')
     .setVersion('1.0')
-    .addTag('auth*')
-    // .addBearerAuth()
+    .addBearerAuth()
     .build()
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup(process.env.SERVER_NAME, app, document, {
@@ -39,8 +43,6 @@ async function bootstrap() {
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true
   })
-
-  app.setGlobalPrefix(process.env.SERVER_NAME)
 
   await app.listen(3000);
 }

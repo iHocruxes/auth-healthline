@@ -3,6 +3,7 @@ import { UserService } from "../services/user.service";
 import { SignUpDto } from "../dto/sign-up.dto";
 import { User } from "../entities/user.entity";
 import { UpdateProfile } from "../dto/update-profile.dto";
+import { ApiBearerAuth } from "@nestjs/swagger";
 
 @Controller('user')
 export class UserController {
@@ -15,16 +16,9 @@ export class UserController {
         return await this.userService.signup(dto)
     }
 
+    @ApiBearerAuth()
     @Patch()
     async update(@Body() dto: UpdateProfile): Promise<any> {
         return await this.userService.updateProfile(dto)
-    }
-
-    @Post('/:start/to/:end')
-    async findUserInRange(
-        @Param('start') start: number,
-        @Param('end') end: number
-    ): Promise<any> {
-        return await this.userService.findUserInRange(start, end)
     }
 }

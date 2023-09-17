@@ -12,7 +12,6 @@ export class UserService extends BaseService<User>{
         @InjectRepository(User) private readonly userRepository: Repository<User>
     ) {
         super(userRepository)
-        this.findUserInRange(1, 10)
     }
 
     async signup(dto: SignUpDto): Promise<any> {
@@ -72,12 +71,12 @@ export class UserService extends BaseService<User>{
         }
     }
 
-    async findUserInRange(start: number, end: number) {
-        return await this.userRepository.find({
-            select: ["phone", "full_name", "role", "email_notification"],
-            order: { updated_at: 'DESC' },
-            skip: start - 1,
-            take: end - start + 1
-        })
-    }
+    // async findUserInRange(start: number, end: number) {
+    //     return await this.userRepository.find({
+    //         select: ["phone", "full_name", "role", "email_notification"],
+    //         order: { updated_at: 'DESC' },
+    //         skip: start - 1,
+    //         take: end - start + 1
+    //     })
+    // }
 }
