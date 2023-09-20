@@ -24,6 +24,12 @@ export class User {
     @Column({ name: 'full_name' })
     full_name: string
 
+    @Column()
+    address: string
+
+    @Column()
+    avatar: string
+
     @Column({ type: 'enum', enum: Role, default: Role.USER })
     role: Role
 

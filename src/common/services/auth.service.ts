@@ -63,9 +63,7 @@ export class AuthService extends BaseService<Token> {
     async signin(user: User): Promise<any> {
         const payload = {
             phone: user.phone,
-            sub: {
-                name: user.full_name
-            }
+            id: user.id
         }
 
         const accessToken = this.jwtService.sign(payload)
@@ -127,9 +125,7 @@ export class AuthService extends BaseService<Token> {
 
         const payload = {
             phone: user.phone,
-            sub: {
-                name: user.full_name
-            }
+            id: user.id
         }
 
         const accessToken = this.jwtService.sign(payload)
