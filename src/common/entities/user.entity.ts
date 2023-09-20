@@ -24,10 +24,10 @@ export class User {
     @Column({ name: 'full_name' })
     full_name: string
 
-    @Column()
+    @Column({ nullable: true })
     address: string
 
-    @Column()
+    @Column({ nullable: true })
     avatar: string
 
     @Column({ type: 'enum', enum: Role, default: Role.USER })
