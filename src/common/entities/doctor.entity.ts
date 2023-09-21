@@ -1,9 +1,10 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
-import { Token } from "./token.entity";
+import { Token } from "../entities/token.entity";
 import { nanoid } from "nanoid";
+import { Specialty } from "../../config/enum.constants";
 
-@Entity({ name: 'Users' })
-export class User {
+@Entity({ name: 'Doctors' })
+export class Doctor {
     constructor() {
         this.id = nanoid()
     }
@@ -14,26 +15,26 @@ export class User {
     @Column()
     phone: string
 
-    @Column({ nullable: true })
-    email: string
+    @Column({ type: 'enum', enum: Specialty })
+    specialty: string
 
     @Column()
     password: string
+
+    @Column({ nullable: true })
+    email: string
 
     @Column({ name: 'full_name' })
     full_name: string
 
     @Column({ nullable: true })
-    address: string
-
-    @Column({ nullable: true })
     avatar: string
 
-    @Column({ name: 'email_notification', default: false })
-    email_notification: boolean
-
-    @OneToMany(() => Token, token => token.user)
+    @OneToMany(() => Token, token => token.doctor)
     token: Token
+
+    @Column({ name: 'account_balance', default: 0 })
+    accout_balance: number
 
     @Column({ type: 'timestamp', name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
     created_at: Date

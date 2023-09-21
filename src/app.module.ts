@@ -1,7 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { postgresOption } from './config/database.config';
-import { CommonModule } from './common/common.module';
+import { UserAuthModule } from './common/modules/user.module';
+import { DoctorAuthModule } from './common/modules/doctor.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -9,7 +11,8 @@ import { CommonModule } from './common/common.module';
       ...postgresOption,
       autoLoadEntities: true
     }),
-    CommonModule
+    UserAuthModule,
+    DoctorAuthModule,
   ],
 })
 export class AppModule { }

@@ -11,16 +11,17 @@ var cookieParser = require('cookie-parser')
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix('common')
+  app.setGlobalPrefix(process.env.SERVER_NAME)
   app.use(cookieParser())
 
   //Swagger
   const config = new DocumentBuilder()
     .setTitle('COMMON')
-    .setDescription('HealthLine API description')
+    .setDescription('Server dùng để xác thực người dùng')
     .setVersion('1.0')
-    .addBearerAuth()
+    .setContact('White Hat', '', 'truonggolang@gmail.com')
     .build()
+
   const document = SwaggerModule.createDocument(app, config)
   SwaggerModule.setup(process.env.SERVER_NAME, app, document, {
     customfavIcon: 'https://cdn.icon-icons.com/icons2/2107/PNG/512/file_type_swagger_icon_130134.png',

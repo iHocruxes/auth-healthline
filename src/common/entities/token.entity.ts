@@ -1,6 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from "typeorm";
 import { User } from "./user.entity";
 import { nanoid } from 'nanoid'
+import { Doctor } from "./doctor.entity";
 
 @Entity({ name: 'Tokens' })
 export class Token {
@@ -18,8 +19,13 @@ export class Token {
     @JoinColumn({ name: 'parent' })
     parent: Token
 
-    @ManyToOne(() => User, user => user.token, { onDelete: 'CASCADE' })
+    @ManyToOne(() => User, e => e.token, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'user_id' })
     user: User
+
+    @ManyToOne(() => Doctor, e => e.token, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'doctor_id' })
+    doctor: Doctor
 
     @Column({ default: true })
     check_valid: boolean

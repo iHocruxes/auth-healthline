@@ -3,31 +3,44 @@ import { BaseService } from '../../config/base.service';
 import { Token } from '../entities/token.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserService } from './user.service';
 import { Response } from 'express';
 import * as dotenv from 'dotenv'
-import { User } from '../entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
+import { Doctor } from '../entities/doctor.entity';
 
 dotenv.config()
 
 @Injectable()
-export class AuthService extends BaseService<Token> {
+export class DoctorAuthService extends BaseService<Token> {
     constructor(
         @InjectRepository(Token) private readonly tokenRepository: Repository<Token>,
-        private readonly userService: UserService,
+        @InjectRepository(Doctor) private readonly doctorRepository: Repository<Doctor>,
         private readonly jwtService: JwtService
     ) {
         super(tokenRepository)
     }
 
-    async validateUser(phone: string, password: string): Promise<any> {
-        const user = await this.userService.findUserByPhone(phone)
-        if (user && (await this.isMatch(password, user.password)))
+    async findUserByPhone(phone: string) {
+        return await this.doctorRepository.findOneBy({ phone: phone })
+    }
+
+    async findUserWithId(doctor_id: string) {
+        try {
+            return await this.doctorRepository.findOne({
+                relations: { token: true },
+                where: { id: doctor_id }
+            })
+        } catch (error) {
+            throw new NotFoundException()
+        }
+    }
+
+    async validateDoctor(phone: string, password: string): Promise<any> {
+        const doctor = await this.findUserByPhone(phone)
+        if (doctor && (await this.isMatch(password, doctor.password)))
             return {
-                id: user.id,
-                phone: user.phone,
-                role: user.role
+                id: doctor.id,
+                phone: doctor.phone,
             }
         return null
     }
@@ -39,7 +52,7 @@ export class AuthService extends BaseService<Token> {
             secure: process.env.NODE_ENV === 'production'
         }
 
-        res.cookie('refresh_token', refresh, {
+        res.cookie('doctor_token', refresh, {
             path: '/',
             sameSite: 'none',
             domain: '.healthline.vn',
@@ -50,9 +63,9 @@ export class AuthService extends BaseService<Token> {
     }
 
     async saveToken(parent = null, accessToken: string, refresh: Token, phone: string): Promise<Token> {
-        const user = await this.userService.findUserByPhone(phone)
+        const doctor = await this.findUserByPhone(phone)
 
-        refresh.user = user
+        refresh.doctor = doctor
         refresh.access_token = accessToken
         refresh.parent = parent
         refresh.expiration_date = this.VNTime(45)
@@ -60,23 +73,22 @@ export class AuthService extends BaseService<Token> {
         return await this.tokenRepository.save(refresh)
     }
 
-    async signin(user: User): Promise<any> {
+    async signin(doctor: Doctor): Promise<any> {
         const payload = {
-            phone: user.phone,
-            id: user.id
+            phone: doctor.phone,
+            id: doctor.id
         }
 
         const accessToken = this.jwtService.sign(payload)
         const refresh = new Token()
 
-        this.saveToken(null, accessToken, refresh, user.phone)
+        this.saveToken(null, accessToken, refresh, doctor.phone)
 
         return {
             metadata: {
                 data: {
-                    id: user.id,
-                    full_name: user.full_name,
-                    role: user.role,
+                    id: doctor.id,
+                    full_name: doctor.full_name,
                     jwt_token: accessToken
                 },
                 success: true
@@ -96,7 +108,9 @@ export class AuthService extends BaseService<Token> {
         else
             await this.tokenRepository.delete({ refresh_token: stolen.parent.refresh_token })
 
-        return "NEVER TRY AGAIN"
+        return {
+            message: "NEVER TRY AGAIN"
+        }
     }
 
     async refreshTokenInCookies(req: string, res: Response): Promise<any> {
@@ -105,7 +119,7 @@ export class AuthService extends BaseService<Token> {
         }
 
         const usedToken = await this.tokenRepository.findOne({
-            relations: { user: true, parent: true },
+            relations: { doctor: true, parent: true },
             where: { refresh_token: req }
         })
 
@@ -121,11 +135,11 @@ export class AuthService extends BaseService<Token> {
             return this.deleteStolenToken(req)
         }
 
-        const user = await this.userService.findUserByPhone(usedToken.user.phone)
+        const doctor = await this.findUserByPhone(usedToken.user.phone)
 
         const payload = {
-            phone: user.phone,
-            id: user.id
+            phone: doctor.phone,
+            id: doctor.id
         }
 
         const accessToken = this.jwtService.sign(payload)
@@ -138,9 +152,8 @@ export class AuthService extends BaseService<Token> {
         return {
             metadata: {
                 data: {
-                    phone: user.phone,
-                    full_name: user.full_name,
-                    role: user.role,
+                    phone: doctor.phone,
+                    full_name: doctor.full_name,
                     jwtToken: accessToken
                 },
                 success: true
