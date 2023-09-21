@@ -17,7 +17,7 @@ async function bootstrap() {
   //Swagger
   const config = new DocumentBuilder()
     .setTitle('COMMON')
-    .setDescription('Server dùng để xác thực người dùng')
+    .setDescription('Microservice dùng để xác thực người dùng và bác sĩ')
     .setVersion('1.0')
     .setContact('White Hat', '', 'truonggolang@gmail.com')
     .build()
