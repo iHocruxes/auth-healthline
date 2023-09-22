@@ -62,11 +62,10 @@ export class UserAuthService extends BaseService<Token> {
         })
     }
 
-    async saveToken(parent = null, accessToken: string, refresh: Token, phone: string): Promise<Token> {
+    async saveToken(parent = null, refresh: Token, phone: string): Promise<Token> {
         const user = await this.findUserByPhone(phone)
 
         refresh.user = user
-        refresh.access_token = accessToken
         refresh.parent = parent
         refresh.expiration_date = this.VNTime(45)
 
@@ -82,7 +81,7 @@ export class UserAuthService extends BaseService<Token> {
         const accessToken = this.jwtService.sign(payload)
         const refresh = new Token()
 
-        this.saveToken(null, accessToken, refresh, user.phone)
+        this.saveToken(null, refresh, user.phone)
 
         return {
             metadata: {
@@ -145,7 +144,7 @@ export class UserAuthService extends BaseService<Token> {
 
         const parentToken = usedToken?.parent ? usedToken.parent : usedToken
 
-        await this.saveToken(parentToken, accessToken, refresh, usedToken.user.phone)
+        await this.saveToken(parentToken, refresh, usedToken.user.phone)
 
         return {
             metadata: {

@@ -12,9 +12,6 @@ export class Token {
     @PrimaryColumn({ name: 'refresh_token' })
     refresh_token: string
 
-    @Column({ nullable: true, name: 'access_token' })
-    access_token: string
-
     @ManyToOne(() => Token, token => token.refresh_token, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'parent' })
     parent: Token
