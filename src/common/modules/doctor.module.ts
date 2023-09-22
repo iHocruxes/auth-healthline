@@ -7,6 +7,9 @@ import { DoctorStrategy } from '../strategies/doctor.strategy';
 import { DoctorAuthController } from '../controllers/doctor.controller';
 import { Doctor } from '../entities/doctor.entity';
 import { PassportModule } from '@nestjs/passport';
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 @Module({
     imports: [
