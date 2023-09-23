@@ -31,12 +31,17 @@ export class UserAuthService extends BaseService<Token> {
                 where: { id: user_id }
             })
         } catch (error) {
-            throw new NotFoundException()
+            throw new NotFoundException("user_not_found")
         }
     }
 
     async validateUser(phone: string, password: string): Promise<any> {
         const user = await this.findUserByPhone(phone)
+
+        if (!user) {
+            throw new NotFoundException("user_not_found")
+        }
+
         if (user && (await this.isMatch(password, user.password)))
             return {
                 id: user.id,

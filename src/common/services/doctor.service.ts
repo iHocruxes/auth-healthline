@@ -31,12 +31,17 @@ export class DoctorAuthService extends BaseService<Token> {
                 where: { id: doctor_id }
             })
         } catch (error) {
-            throw new NotFoundException()
+            throw new NotFoundException("dotor_not_found")
         }
     }
 
     async validateDoctor(phone: string, password: string): Promise<any> {
         const doctor = await this.findUserByPhone(phone)
+
+        if (!doctor) {
+            throw new NotFoundException("doctor_not_found")
+        }
+
         if (doctor && (await this.isMatch(password, doctor.password)))
             return {
                 id: doctor.id,
