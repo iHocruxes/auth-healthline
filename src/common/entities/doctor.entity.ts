@@ -45,7 +45,7 @@ export class Doctor {
     @Min(0)
     fee_per_munites: number
 
-    @OneToMany(() => Token, token => token.user)
+    @OneToMany(() => Token, token => token.doctor)
     token: Token
 
     @Column({ type: 'timestamp', name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
