@@ -1,7 +1,7 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from "typeorm";
-import { Token } from "../entities/token.entity";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
 import { nanoid } from "nanoid";
 import { Specialty } from "../../config/enum.constants";
+import { Min } from "class-validator";
 
 @Entity({ name: 'Doctors' })
 export class Doctor {
@@ -15,9 +15,6 @@ export class Doctor {
     @Column()
     phone: string
 
-    @Column({ type: 'enum', enum: Specialty })
-    specialty: string
-
     @Column()
     password: string
 
@@ -30,11 +27,22 @@ export class Doctor {
     @Column({ nullable: true })
     avatar: string
 
-    @OneToMany(() => Token, token => token.doctor)
-    token: Token
+    @Column({ nullable: true })
+    biography: string
+
+    @Column({ type: 'enum', enum: Specialty })
+    specialty: string
 
     @Column({ name: 'account_balance', default: 0 })
+    @Min(0)
     accout_balance: number
+
+    @Column()
+    experience: number
+
+    @Column()
+    @Min(0)
+    fee_per_munites: number
 
     @Column({ type: 'timestamp', name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
     created_at: Date
