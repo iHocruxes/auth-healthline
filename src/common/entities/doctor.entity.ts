@@ -2,6 +2,7 @@ import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from "typeorm";
 import { nanoid } from "nanoid";
 import { Specialty } from "../../config/enum.constants";
 import { Min } from "class-validator";
+import { Token } from "./token.entity";
 
 @Entity({ name: 'Doctors' })
 export class Doctor {
@@ -43,6 +44,9 @@ export class Doctor {
     @Column()
     @Min(0)
     fee_per_munites: number
+
+    @OneToMany(() => Token, token => token.user)
+    token: Token
 
     @Column({ type: 'timestamp', name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
     created_at: Date
