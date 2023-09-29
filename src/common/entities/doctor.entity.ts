@@ -45,6 +45,9 @@ export class Doctor {
     @Min(0)
     fee_per_munites: number
 
+    @Column({ name: 'fixed_times', nullable: true })
+    fixed_times: string
+
     @OneToMany(() => Token, token => token.doctor)
     token: Token
 
