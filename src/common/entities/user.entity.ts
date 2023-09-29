@@ -21,7 +21,7 @@ export class User {
     password: string
 
     @Column({ name: 'account_balance', default: 0 })
-    accountBalance: number
+    account_balance: number
 
     @Column({ name: 'email_notification', default: false })
     email_notification: boolean
