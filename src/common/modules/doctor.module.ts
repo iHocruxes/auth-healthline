@@ -8,6 +8,7 @@ import { DoctorAuthController } from '../controllers/doctor.controller';
 import { Doctor } from '../entities/doctor.entity';
 import { PassportModule } from '@nestjs/passport';
 import * as dotenv from 'dotenv'
+import { ScheduleModule } from '@nestjs/schedule';
 
 dotenv.config()
 
@@ -20,6 +21,7 @@ dotenv.config()
             signOptions: { expiresIn: '14d' }
         }),
         TypeOrmModule.forFeature([Token, Doctor]),
+        ScheduleModule.forRoot()
     ],
     providers: [
         DoctorAuthService,

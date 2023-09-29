@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Response } from 'express';
 import * as dotenv from 'dotenv'
+import { Cron, CronExpression } from '@nestjs/schedule'
 import { JwtService } from '@nestjs/jwt';
 import { Doctor } from '../entities/doctor.entity';
 
@@ -19,6 +20,15 @@ export class DoctorAuthService extends BaseService<Token> {
     ) {
         super(tokenRepository)
     }
+
+    @Cron(CronExpression.EVERY_WEEKEND)
+    async deleteToken() {
+        return await this.tokenRepository.delete({
+            check_valid: false,
+            refresh_token: null
+        })
+    }
+
 
     async findUserByPhone(phone: string) {
         return await this.doctorRepository.findOneBy({ phone: phone })

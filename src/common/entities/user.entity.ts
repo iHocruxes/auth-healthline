@@ -20,14 +20,8 @@ export class User {
     @Column()
     password: string
 
-    @Column({ name: 'full_name' })
-    full_name: string
-
-    @Column({ nullable: true })
-    address: string
-
-    @Column({ nullable: true })
-    avatar: string
+    @Column({ name: 'account_balance', default: 0 })
+    accountBalance: number
 
     @Column({ name: 'email_notification', default: false })
     email_notification: boolean

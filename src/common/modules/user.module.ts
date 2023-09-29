@@ -7,6 +7,7 @@ import { User } from '../entities/user.entity';
 import { UserStrategy } from '../strategies/user.strategy';
 import { UserAuthController } from '../controllers/user.controller';
 import { PassportModule } from '@nestjs/passport';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
     imports: [
@@ -17,6 +18,7 @@ import { PassportModule } from '@nestjs/passport';
             signOptions: { expiresIn: '14d' }
         }),
         TypeOrmModule.forFeature([Token, User]),
+        ScheduleModule.forRoot()
     ],
     providers: [
         UserAuthService,

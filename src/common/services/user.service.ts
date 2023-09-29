@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Response } from 'express';
 import * as dotenv from 'dotenv'
+import { Cron, CronExpression } from '@nestjs/schedule'
 import { User } from '../entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 
@@ -18,6 +19,14 @@ export class UserAuthService extends BaseService<Token> {
         private readonly jwtService: JwtService
     ) {
         super(tokenRepository)
+    }
+
+    @Cron(CronExpression.EVERY_WEEKEND)
+    async deleteToken() {
+        return await this.tokenRepository.delete({
+            check_valid: false,
+            refresh_token: null
+        })
     }
 
     async findUserByPhone(phone: string) {
@@ -92,7 +101,6 @@ export class UserAuthService extends BaseService<Token> {
             metadata: {
                 data: {
                     id: user.id,
-                    full_name: user.full_name,
                     jwt_token: accessToken
                 },
                 success: true
@@ -155,7 +163,6 @@ export class UserAuthService extends BaseService<Token> {
             metadata: {
                 data: {
                     phone: user.phone,
-                    full_name: user.full_name,
                     jwtToken: accessToken
                 },
                 success: true
