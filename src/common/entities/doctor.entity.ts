@@ -41,7 +41,7 @@ export class Doctor {
     @Column()
     experience: number
 
-    @Column()
+    @Column({ default: 0 })
     @Min(0)
     fee_per_munites: number
 
