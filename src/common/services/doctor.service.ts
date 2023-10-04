@@ -69,7 +69,7 @@ export class DoctorAuthService extends BaseService<Token> {
 
         res.cookie('doctor_token', refresh, {
             path: '/',
-            sameSite: 'none',
+            sameSite: 'lax',
             domain: '.healthline.vn',
             httpOnly: cookieOptions.httpOnly,
             expires: cookieOptions.expires,
