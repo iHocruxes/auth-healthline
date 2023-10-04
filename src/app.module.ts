@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { postgresOption } from './config/database.config';
 import { UserAuthModule } from './common/modules/user.module';
 import { DoctorAuthModule } from './common/modules/doctor.module';
-import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
