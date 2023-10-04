@@ -149,7 +149,7 @@ export class DoctorAuthService extends BaseService<Token> {
             return this.deleteStolenToken(req)
         }
 
-        const doctor = await this.findUserByPhone(usedToken.user.phone)
+        const doctor = await this.findUserByPhone(usedToken.doctor.phone)
 
         const payload = {
             phone: doctor.phone,
@@ -161,7 +161,7 @@ export class DoctorAuthService extends BaseService<Token> {
 
         const parentToken = usedToken?.parent ? usedToken.parent : usedToken
 
-        await this.saveToken(parentToken, refresh, usedToken.user.phone)
+        await this.saveToken(parentToken, refresh, usedToken.doctor.phone)
 
         return {
             metadata: {
