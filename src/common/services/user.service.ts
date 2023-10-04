@@ -68,7 +68,7 @@ export class UserAuthService extends BaseService<Token> {
 
         res.cookie('user_token', refresh, {
             path: '/',
-            sameSite: 'none',
+            sameSite: 'lax',
             domain: '.healthline.vn',
             httpOnly: cookieOptions.httpOnly,
             expires: cookieOptions.expires,
