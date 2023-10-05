@@ -1,6 +1,5 @@
 import { Repository } from "typeorm";
 import * as bcrypt from 'bcrypt'
-import { JwtService } from "@nestjs/jwt";
 
 export abstract class BaseService<T> {
     constructor(protected readonly repository: Repository<T>,

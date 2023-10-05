@@ -5,7 +5,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Response } from 'express';
 import * as dotenv from 'dotenv'
-import { Cron, CronExpression } from '@nestjs/schedule'
 import { JwtService } from '@nestjs/jwt';
 import { Doctor } from '../entities/doctor.entity';
 
@@ -21,32 +20,16 @@ export class DoctorAuthService extends BaseService<Token> {
         super(tokenRepository)
     }
 
-    @Cron(CronExpression.EVERY_WEEKEND)
-    async deleteToken() {
-        return await this.tokenRepository.delete({
-            check_valid: false,
-            refresh_token: null
-        })
-    }
+    async findDoctorByPhone(phone: string): Promise<Doctor> {
+        const doctor = await this.doctorRepository.findOneBy({ phone: phone })
+        if (!doctor)
+            throw new NotFoundException('doctor_not_found')
 
-
-    async findUserByPhone(phone: string) {
-        return await this.doctorRepository.findOneBy({ phone: phone })
-    }
-
-    async findUserWithId(doctor_id: string) {
-        try {
-            return await this.doctorRepository.findOne({
-                relations: { token: true },
-                where: { id: doctor_id }
-            })
-        } catch (error) {
-            throw new NotFoundException("dotor_not_found")
-        }
+        return doctor
     }
 
     async validateDoctor(phone: string, password: string): Promise<any> {
-        const doctor = await this.findUserByPhone(phone)
+        const doctor = await this.findDoctorByPhone(phone)
 
         if (!doctor) {
             throw new NotFoundException("doctor_not_found")
@@ -78,11 +61,10 @@ export class DoctorAuthService extends BaseService<Token> {
     }
 
     async saveToken(parent = null, refresh: Token, phone: string): Promise<Token> {
-        const doctor = await this.findUserByPhone(phone)
+        const doctor = await this.findDoctorByPhone(phone)
 
         refresh.doctor = doctor
         refresh.parent = parent
-        refresh.expiration_date = this.VNTime(45)
 
         return await this.tokenRepository.save(refresh)
     }
@@ -105,7 +87,6 @@ export class DoctorAuthService extends BaseService<Token> {
                     full_name: doctor.full_name,
                     jwt_token: accessToken
                 },
-                success: true
             },
             refresh: refresh.refresh_token
         }
@@ -129,7 +110,7 @@ export class DoctorAuthService extends BaseService<Token> {
 
     async refreshTokenInCookies(req: string, res: Response): Promise<any> {
         if (!req) {
-            throw new NotFoundException()
+            throw new NotFoundException('doctor_token_not_found')
         }
 
         const usedToken = await this.tokenRepository.findOne({
@@ -138,7 +119,7 @@ export class DoctorAuthService extends BaseService<Token> {
         })
 
         if (!usedToken) {
-            throw new NotFoundException()
+            throw new NotFoundException('used_token_not_found')
         }
 
         if (usedToken.check_valid) {
@@ -149,7 +130,7 @@ export class DoctorAuthService extends BaseService<Token> {
             return this.deleteStolenToken(req)
         }
 
-        const doctor = await this.findUserByPhone(usedToken.doctor.phone)
+        const doctor = await this.findDoctorByPhone(usedToken.doctor.phone)
 
         const payload = {
             phone: doctor.phone,
@@ -167,10 +148,8 @@ export class DoctorAuthService extends BaseService<Token> {
             metadata: {
                 data: {
                     phone: doctor.phone,
-                    full_name: doctor.full_name,
                     jwtToken: accessToken
                 },
-                success: true
             },
             refresh: refresh.refresh_token
         }

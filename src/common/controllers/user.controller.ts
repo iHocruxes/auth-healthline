@@ -16,6 +16,7 @@ export class UserAuthController {
     @ApiOperation({ summary: 'Đăng nhập dành cho người dùng', description: 'Khi đăng nhập thành công sẽ tạo user_token ở trên cookies dùng để lấy access_token mới cho người dùng (khi access_token cũ hết hạn)' })
     @ApiResponse({ status: 200, description: 'Thành công' })
     @ApiResponse({ status: 401, description: 'Sai thông tin đăng nhập của người dùng' })
+    @ApiResponse({ status: 404, description: 'Tài khoản không tồn tại' })
     @Post('auth')
     async signin(
         @Req() req,
@@ -23,7 +24,7 @@ export class UserAuthController {
         @Res({ passthrough: true }) res: Response
     ): Promise<any> {
         const { metadata, refresh } = await this.authService.signin(req.user)
-        const expires = 45
+        const expires = 7
         await this.authService.saveRefreshTokenToCookies(refresh, res, expires)
 
         return metadata
@@ -38,7 +39,7 @@ export class UserAuthController {
         @Res({ passthrough: true }) res: Response
     ) {
         const { metadata, refresh } = await this.authService.refreshTokenInCookies(req.cookies.user_token, res)
-        const expires = 45 //day
+        const expires = 7
 
         await this.authService.saveRefreshTokenToCookies(refresh, res, expires)
 
@@ -54,7 +55,7 @@ export class UserAuthController {
         @Res({ passthrough: true }) res: Response
     ) {
         if (!req.cookies.user_token) {
-            return new NotFoundException().getResponse()
+            throw new NotFoundException('logged_out')
         }
 
         await this.authService.deleteStolenToken(req.cookies.user_token)

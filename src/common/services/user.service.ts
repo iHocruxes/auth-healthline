@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { BaseService } from '../../config/base.service';
 import { Token } from '../entities/token.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { Response } from 'express';
 import * as dotenv from 'dotenv'
 import { Cron, CronExpression } from '@nestjs/schedule'
@@ -22,34 +22,25 @@ export class UserAuthService extends BaseService<Token> {
     }
 
     @Cron(CronExpression.EVERY_WEEKEND)
-    async deleteToken() {
+    async deleteToken(): Promise<DeleteResult> {
+        console.log("Delete used token every weekend")
+
         return await this.tokenRepository.delete({
             check_valid: false,
             refresh_token: null
         })
     }
 
-    async findUserByPhone(phone: string) {
-        return await this.userRepository.findOneBy({ phone: phone })
-    }
+    async findUserByPhone(phone: string): Promise<User> {
+        const user = await this.userRepository.findOneBy({ phone: phone })
+        if (!user)
+            throw new NotFoundException('user_not_found')
 
-    async findUserWithId(user_id: string) {
-        try {
-            return await this.userRepository.findOne({
-                relations: { token: true },
-                where: { id: user_id }
-            })
-        } catch (error) {
-            throw new NotFoundException("user_not_found")
-        }
+        return user
     }
 
     async validateUser(phone: string, password: string): Promise<any> {
         const user = await this.findUserByPhone(phone)
-
-        if (!user) {
-            throw new NotFoundException("user_not_found")
-        }
 
         if (user && (await this.isMatch(password, user.password)))
             return {
@@ -81,7 +72,6 @@ export class UserAuthService extends BaseService<Token> {
 
         refresh.user = user
         refresh.parent = parent
-        refresh.expiration_date = this.VNTime(45)
 
         return await this.tokenRepository.save(refresh)
     }
@@ -103,7 +93,6 @@ export class UserAuthService extends BaseService<Token> {
                     id: user.id,
                     jwt_token: accessToken
                 },
-                success: true
             },
             refresh: refresh.refresh_token
         }
@@ -125,7 +114,7 @@ export class UserAuthService extends BaseService<Token> {
 
     async refreshTokenInCookies(req: string, res: Response): Promise<any> {
         if (!req) {
-            throw new NotFoundException()
+            throw new NotFoundException('user_token_not_found')
         }
 
         const usedToken = await this.tokenRepository.findOne({
@@ -134,7 +123,7 @@ export class UserAuthService extends BaseService<Token> {
         })
 
         if (!usedToken) {
-            throw new NotFoundException()
+            throw new NotFoundException('used_token_not_found')
         }
 
         if (usedToken.check_valid) {
@@ -165,7 +154,6 @@ export class UserAuthService extends BaseService<Token> {
                     phone: user.phone,
                     jwtToken: accessToken
                 },
-                success: true
             },
             refresh: refresh.refresh_token
         }

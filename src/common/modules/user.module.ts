@@ -15,7 +15,7 @@ import { ScheduleModule } from '@nestjs/schedule';
         JwtModule.register({
             global: true,
             secret: process.env.USER_SECRET,
-            signOptions: { expiresIn: '14d' }
+            signOptions: { expiresIn: '4d' }
         }),
         TypeOrmModule.forFeature([Token, User]),
         ScheduleModule.forRoot()

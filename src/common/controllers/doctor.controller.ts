@@ -17,6 +17,7 @@ export class DoctorAuthController {
     @ApiOperation({ summary: 'Đăng nhập dành cho bác sĩ', description: 'Khi đăng nhập thành công sẽ tạo doctor_token ở trên cookies dùng để lấy access_token mới cho bác sĩ (khi access_token cũ hết hạn)' })
     @ApiResponse({ status: 200, description: 'Thành công' })
     @ApiResponse({ status: 401, description: 'Sai thông tin đăng nhập của bác sĩ' })
+    @ApiResponse({ status: 404, description: 'Tài khoản không tồn tại' })
     @Post('auth')
     async signin(
         @Req() req,
@@ -24,7 +25,7 @@ export class DoctorAuthController {
         @Res({ passthrough: true }) res: Response
     ): Promise<any> {
         const { metadata, refresh } = await this.authService.signin(req.user)
-        const expires = 45
+        const expires = 7
         await this.authService.saveRefreshTokenToCookies(refresh, res, expires)
 
         return metadata
@@ -39,7 +40,7 @@ export class DoctorAuthController {
         @Res({ passthrough: true }) res: Response
     ) {
         const { metadata, refresh } = await this.authService.refreshTokenInCookies(req.cookies.doctor_token, res)
-        const expires = 45 //day
+        const expires = 7
 
         await this.authService.saveRefreshTokenToCookies(refresh, res, expires)
 
@@ -55,7 +56,7 @@ export class DoctorAuthController {
         @Res({ passthrough: true }) res: Response
     ) {
         if (!req.cookies.doctor_token) {
-            return new NotFoundException().getResponse()
+            throw new NotFoundException('logged_out')
         }
 
         await this.authService.deleteStolenToken(req.cookies.doctor_token)

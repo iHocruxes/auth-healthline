@@ -26,7 +26,4 @@ export class Token {
 
     @Column({ default: true })
     check_valid: boolean
-
-    @Column({ type: 'timestamp', name: 'expiration_date' })
-    expiration_date: Date
 }
