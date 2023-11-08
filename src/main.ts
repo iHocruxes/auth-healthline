@@ -12,6 +12,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.setGlobalPrefix(process.env.SERVER_NAME)
+
   app.use(cookieParser())
 
   //Swagger
