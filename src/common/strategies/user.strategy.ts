@@ -12,7 +12,7 @@ export class UserStrategy extends PassportStrategy(Strategy, 'user') {
     async validate(phone: string, password: string) {
         const user = await this.authService.validateUser(phone, password)
         if (!user)
-            throw new UnauthorizedException("unauthrorized")
+            throw new UnauthorizedException("unauthorized")
         return user
     }
 }
