@@ -38,7 +38,7 @@ export class AdminAuthController {
         return metadata
     }
 
-    @ApiOperation({ summary: 'Tạo mới access_token và adminT-oken cho admin khi access_token cũ hết hạn', description: 'Thời gian sống của admin_token sẽ dài hơn thời gian sống của access_token và admin_token chỉ xài được duy nhất 1 lần' })
+    @ApiOperation({ summary: 'Tạo mới access_token và admin_token cho admin khi access_token cũ hết hạn', description: 'Thời gian sống của admin_token sẽ dài hơn thời gian sống của access_token và admin_token chỉ xài được duy nhất 1 lần' })
     @ApiResponse({ status: 201, description: 'Tạo mới admin_token thành công' })
     @ApiResponse({ status: 404, description: 'Không tìm thấy admin_token ở trên cookies' })
     @Post('refresh')
