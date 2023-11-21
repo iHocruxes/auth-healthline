@@ -53,7 +53,7 @@ export class AdminAuthService extends BaseService<Token> {
         res.cookie('admin_token', refresh, {
             path: '/',
             sameSite: 'none',
-            // domain: '.healthline.vn',
+            domain: '.healthline.vn',
             httpOnly: cookieOptions.httpOnly,
             expires: cookieOptions.expires,
             secure: cookieOptions.secure
