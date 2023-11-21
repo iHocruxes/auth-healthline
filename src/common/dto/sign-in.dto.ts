@@ -12,3 +12,11 @@ export class SignInDto {
     @ApiProperty({ example: 'Healthline@123' })
     password: string
 }
+
+export class AdminDto {
+    @IsString()
+    username: string
+
+    @IsString()
+    password: string
+}

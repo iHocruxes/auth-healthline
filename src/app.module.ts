@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { postgresOption } from './config/database.config';
 import { UserAuthModule } from './common/modules/user.module';
 import { DoctorAuthModule } from './common/modules/doctor.module';
+import { AdminAuthModule } from './common/modules/admin.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { DoctorAuthModule } from './common/modules/doctor.module';
     }),
     UserAuthModule,
     DoctorAuthModule,
+    AdminAuthModule
   ],
 })
 export class AppModule { }
