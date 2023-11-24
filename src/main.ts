@@ -45,7 +45,6 @@ async function bootstrap() {
     origin: ['https://healthline.vn', 'https://admin.healthline.vn'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
-    allowedHeaders: ['Access-Control-Allow-Credentials']
   })
 
   await app.listen(3000);
