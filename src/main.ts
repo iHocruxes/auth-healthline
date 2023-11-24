@@ -44,7 +44,8 @@ async function bootstrap() {
   app.enableCors({
     origin: ['https://healthline.vn', 'https://admin.healthline.vn'],
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    credentials: true
+    credentials: true,
+    allowedHeaders: 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe'
   })
 
   await app.listen(3000);
