@@ -52,7 +52,7 @@ export class UserAuthService extends BaseService<Token> {
 
     async saveRefreshTokenToCookies(refresh: string, res: Response, time: number): Promise<void> {
         const cookieOptions = {
-            httpOnly: true,
+            httpOnly: process.env.NODE_ENV === 'staging',
             expires: this.VNTime(time),
             secure: process.env.NODE_ENV === 'production'
         }
@@ -60,7 +60,7 @@ export class UserAuthService extends BaseService<Token> {
         res.cookie('user_token', refresh, {
             path: '/',
             sameSite: 'none',
-            domain: 'healthline.vn',
+            domain: '.healthline.vn',
             httpOnly: cookieOptions.httpOnly,
             expires: cookieOptions.expires,
             secure: cookieOptions.secure
