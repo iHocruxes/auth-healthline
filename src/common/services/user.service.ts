@@ -52,7 +52,7 @@ export class UserAuthService extends BaseService<Token> {
 
     async saveRefreshTokenToCookies(refresh: string, res: Response, time: number): Promise<void> {
         const cookieOptions = {
-            httpOnly: process.env.NODE_ENV === 'staging',
+            httpOnly: true,
             expires: this.VNTime(time),
             secure: process.env.NODE_ENV === 'production'
         }
