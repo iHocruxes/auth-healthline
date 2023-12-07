@@ -42,7 +42,8 @@ async function bootstrap() {
 
   //
   app.enableCors({
-    origin: ['https://healthline.vn', 'https://admin.healthline.vn'],
+    // origin: ['https://healthline.vn', 'https://admin.healthline.vn'],
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
   })
