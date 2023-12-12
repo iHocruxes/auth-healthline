@@ -31,4 +31,4 @@ dotenv.config()
         UserAuthController,
     ]
 })
-export class UserAuthModule { }
+export class UserAuthModule {}
