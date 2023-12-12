@@ -8,6 +8,9 @@ import { UserStrategy } from '../strategies/user.strategy';
 import { UserAuthController } from '../controllers/user.controller';
 import { PassportModule } from '@nestjs/passport';
 import { ScheduleModule } from '@nestjs/schedule';
+import * as dotenv from 'dotenv'
+
+dotenv.config()
 
 @Module({
     imports: [
