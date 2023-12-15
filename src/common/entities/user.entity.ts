@@ -26,6 +26,9 @@ export class User {
     @Column({ name: 'email_notification', default: false })
     email_notification: boolean
 
+    @Column({ default: true })
+    isActive: boolean
+
     @OneToMany(() => Token, token => token.user)
     token: Token
 
