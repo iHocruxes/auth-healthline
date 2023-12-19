@@ -29,6 +29,9 @@ export class User {
     @Column({ default: true })
     isActive: boolean
 
+    @Column({ default: false })
+    isGoogle: boolean
+
     @OneToMany(() => Token, token => token.user)
     token: Token
 
