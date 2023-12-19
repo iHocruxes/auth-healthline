@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Post, Put, Req, Res, UseGuards, NotFoundException } from "@nestjs/common";
 import { UserAuthService } from "../services/user.service";
 import { UserAuthGuard } from "../guards/user.guard";
-import { SignInDto } from "../dto/sign-in.dto";
+import { GoogleSignin, SignInDto } from "../dto/sign-in.dto";
 import { Response } from "express";
 import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
 
@@ -11,6 +11,12 @@ export class UserAuthController {
     constructor(
         private readonly authService: UserAuthService
     ) { }
+
+    async GoogleSignin(
+        @Body() dto: GoogleSignin
+    ) {
+        return await this.GoogleSignin(dto)
+    }
 
     @UseGuards(UserAuthGuard)
     @ApiOperation({ summary: 'Đăng nhập dành cho người dùng', description: 'Khi đăng nhập thành công sẽ tạo user_token ở trên cookies dùng để lấy access_token mới cho người dùng (khi access_token cũ hết hạn)' })

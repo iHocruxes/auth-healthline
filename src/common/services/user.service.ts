@@ -8,6 +8,7 @@ import * as dotenv from 'dotenv'
 import { Cron, CronExpression } from '@nestjs/schedule'
 import { User } from '../entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
+import { GoogleSignin } from '../dto/sign-in.dto';
 
 dotenv.config()
 
@@ -37,6 +38,35 @@ export class UserAuthService extends BaseService<Token> {
             throw new NotFoundException('user_not_found')
 
         return user
+    }
+
+    async GoogleSignin(dto: GoogleSignin): Promise<any> {
+        const user = await this.userRepository.findOneBy({
+            email: dto.email,
+            isActive: true
+        })
+
+        if (!user)
+            throw new NotFoundException('email_not_found')
+        const payload = {
+            phone: user.phone,
+            id: user.id
+        }
+
+        const accessToken = this.jwtService.sign(payload)
+        const refresh = new Token()
+
+        this.saveToken(null, refresh, user.phone)
+
+        return {
+            metadata: {
+                data: {
+                    id: user.id,
+                    jwt_token: accessToken
+                },
+            },
+            refresh: refresh.refresh_token
+        }
     }
 
     async validateUser(phone: string, password: string): Promise<any> {

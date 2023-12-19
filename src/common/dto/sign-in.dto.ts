@@ -20,3 +20,8 @@ export class AdminDto {
     @IsString()
     password: string
 }
+
+export class GoogleSignin {
+    @ApiProperty({ example: "toidixincode@gmail.com" })
+    email: string
+}
