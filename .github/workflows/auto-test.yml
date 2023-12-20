@@ -30,4 +30,4 @@ jobs:
       - name: Build
         run: npm run build
       - name: Run All Test
-        run: npx cypress run
+        run: npm run newman
