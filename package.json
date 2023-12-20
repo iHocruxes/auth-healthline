@@ -20,7 +20,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "newman": "newman run test/test.json"
   },
   "dependencies": {
     "@nestjs/common": "^10.2.5",
@@ -37,6 +38,7 @@
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.3.1",
     "nanoid": "3.3.6",
+    "newman": "^6.0.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",

@@ -1,0 +1,697 @@
+{
+	"info": {
+		"_postman_id": "9895f095-f0dc-4a1c-8324-731b58e999f0",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25289898",
+		"_collection_link": "https://blue-space-475642.postman.co/workspace/My-Workspace~861e2963-8b1c-4fe5-81b9-ca15c412fffe/collection/25289898-9895f095-f0dc-4a1c-8324-731b58e999f0?action=share&source=collection_link&creator=25289898"
+	},
+	"item": [
+		{
+			"name": "common Copy 2",
+			"item": [
+				{
+					"name": "user",
+					"item": [
+						{
+							"name": "signin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"phone\": \"+84832395626\",\r\n    \"password\": \"Minh@123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apis.healthline.vn/common/user/auth",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"user",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "signin Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () { pm.response.to.have.status(401); });"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"phone\": \"+84832395626\",\r\n    \"password\": \"Minh@\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apis.healthline.vn/common/user/auth",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"user",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "signin Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"phone\": \"+84389052819\",\r\n    \"password\": \"Phat@123\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apis.healthline.vn/common/user/auth",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"user",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "refresh",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apis.healthline.vn/common/user/refresh",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"user",
+										"refresh"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "refresh Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apis.healthline.vn/common/user/refresh",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"user",
+										"refresh"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "refresh Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apis.healthline.vn/common/user/refresh",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"user",
+										"refresh"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://apis.healthline.vn/common/user/logout",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"user",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://apis.healthline.vn/common/user/logout",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"user",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://apis.healthline.vn/common/user/logout",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"user",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "USER AUTH"
+				},
+				{
+					"name": "doctor",
+					"item": [
+						{
+							"name": "signin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"phone\": \"+84389052819\",\r\n    \"password\": \"Phat123!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apis.healthline.vn/common/doctor/auth",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"doctor",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "signin Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 404\", function () {\r",
+											"    pm.response.to.have.status(404);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"phone\": \"+843890528319\",\r\n    \"password\": \"Phat123!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apis.healthline.vn/common/doctor/auth",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"doctor",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "signin Copy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 401\", function () {\r",
+											"    pm.response.to.have.status(401);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"phone\": \"+84389052819\",\r\n    \"password\": \"Phat12!\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apis.healthline.vn/common/doctor/auth",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"doctor",
+										"auth"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "refresh",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 201\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apis.healthline.vn/common/doctor/refresh",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"doctor",
+										"refresh"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "refresh Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apis.healthline.vn/common/doctor/refresh",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"doctor",
+										"refresh"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "refresh Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://apis.healthline.vn/common/doctor/refresh",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"doctor",
+										"refresh"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://apis.healthline.vn/common/doctor/logout",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"doctor",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout Copy",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://apis.healthline.vn/common/doctor/logout",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"doctor",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "logout Copy",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "https://apis.healthline.vn/common/doctor/logout",
+									"protocol": "https",
+									"host": [
+										"apis",
+										"healthline",
+										"vn"
+									],
+									"path": [
+										"common",
+										"doctor",
+										"logout"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "USER AUTH"
+				}
+			],
+			"description": "Microservice dùng để xác thực người dùng, bác sĩ và admin\n\nPORT 3000"
+		}
+	]
+}
