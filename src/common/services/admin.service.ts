@@ -96,7 +96,9 @@ export class AdminAuthService extends BaseService<Token> {
             relations: { parent: true },
             where: { refresh_token: stolenToken }
         })
+        if (!stolen)
 
+            throw new NotFoundException('logged_out')
         if (!stolen.parent)
             await this.tokenRepository.delete({ refresh_token: stolen.refresh_token })
         else
@@ -167,8 +169,8 @@ export class AdminAuthService extends BaseService<Token> {
         admin.password = await this.hashing(password)
         admin.created_at = this.VNTime()
 
-        await this.adminRepository.save(admin)
-
+        const data = await this.adminRepository.save(admin)
+        console.log(data)
         return {
             data: {
                 id: admin.id,
