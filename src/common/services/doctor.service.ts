@@ -97,6 +97,9 @@ export class DoctorAuthService extends BaseService<Token> {
             relations: { parent: true },
             where: { refresh_token: stolenToken }
         })
+        if (!stolen)
+            throw new NotFoundException('logged_out')
+
 
         if (!stolen.parent)
             await this.tokenRepository.delete({ refresh_token: stolen.refresh_token })
