@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { BaseService } from '../../config/base.service';
 import { Token } from '../entities/token.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -36,6 +36,9 @@ export class UserAuthService extends BaseService<Token> {
         const user = await this.userRepository.findOneBy({ phone: phone })
         if (!user)
             throw new NotFoundException('user_not_found')
+
+        if (user.isActive === false)
+            throw new BadRequestException('waiting_for_admin_approval')
 
         return user
     }
